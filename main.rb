@@ -9,7 +9,7 @@ end
 def get_files_by_commit commit = 'HEAD'
 	query = 'git show ' + commit + ' --name-only --pretty="format:"'
 	git_result = IO.popen(query).read
-	return git_result.split(/[\r\n]+/).uniq.sort.reject! {|i| i.empty?}
+	git_result.split(/[\r\n]+/).uniq.sort.reject! {|i| i.empty?}
 end
 
 # Retorna os arquivos dos ultimos commits
@@ -18,14 +18,14 @@ def get_files_last_commits num_last = 1, commit = 'HEAD' # 1 == HEAD, 2 == HEAD 
 	last = (num_last.to_i * -1).to_s
 	query = 'git log ' + commit +' '+ last + ' --name-only --pretty="format:"'
 	git_result = IO.popen(query).read
-  return git_result.split(/[\r\n]+/).uniq.sort.reject! {|i| i.empty?}
+  	git_result.split(/[\r\n]+/).uniq.sort.reject! {|i| i.empty?}
 end
 
 # Retorna os arquivos que foram modificados
 #   return array Lista com os arquivos modificados
 def get_files_modified
 	git_result = IO.popen('git status -u --porcelain').read
-	return git_result.split(/[\r\n]+/).uniq.sort
+	git_result.split(/[\r\n]+/).uniq.sort
 end
 
 # Retorna os parametros passados no commad line em um HASH
@@ -42,11 +42,11 @@ def get_formated_commat_line_object
 	end
 	@formated_commat_line = map
 
-	return @formated_commat_line
+	@formated_commat_line
 end
 
 def get_formated_print_files list_files
-   return get_formated_commat_line_object.has_key?('--format') ? list_files.join(',') : list_files
+   get_formated_commat_line_object.has_key?('--format') ? list_files.join(',') : list_files
 end
 
 
