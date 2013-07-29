@@ -4,21 +4,10 @@ def get_branch_name
 	puts IO.popen('git branch --no-abbrev').read.slice(2..-1)
 end
 
-# Retorna os aquivos modificados no commit passado
-#   return array Lista dos arquivos modificados
-def get_files_by_commit commit = 'HEAD'
-	query = 'git show ' + commit + ' --name-only --pretty="format:"'
-	git_result = IO.popen(query).read
-	git_result.split(/[\r\n]+/).uniq.sort.reject! {|i| i.empty?}
-end
-
-# Retorna os arquivos dos ultimos commits
-#   return array Lista dos arquivos modificados dos ultimos commits
-def get_files_last_commits num_last = 1, commit = 'HEAD' # 1 == HEAD, 2 == HEAD + HEAD~1...
-	last = (num_last.to_i * -1).to_s
-	query = 'git log ' + commit +' '+ last + ' --name-only --pretty="format:"'
-	git_result = IO.popen(query).read
-  	git_result.split(/[\r\n]+/).uniq.sort.reject! {|i| i.empty?}
+def files_modified_in_commit commit = 'HEAD', num_commits_back = 0
+	last = (num_commits_back.to_i + 1).to_s
+	query = 'git log ' + commit + ' -' + last + ' --name-only --pretty="format:"'
+	IO.popen(query).read.split(/[\r\n]+/).uniq.sort.reject! {|i| i.empty?}
 end
 
 # Retorna os arquivos que foram modificados
