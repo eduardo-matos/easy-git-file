@@ -14,7 +14,7 @@ end
 #   return array Lista com os arquivos modificados
 def get_files_modified
 	git_result = IO.popen('git status -u --porcelain').read
-	git_result.split(/[\r\n]+/).uniq.sort
+	git_result.split(/[\r\n]+/).uniq.map!{|file| file.slice 3..-1}
 end
 
 # Retorna os parametros passados no commad line em um HASH
