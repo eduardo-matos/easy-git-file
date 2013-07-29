@@ -1,8 +1,7 @@
 # Retorna o nome do branch atual
 #   return string Nome do Branch
 def get_branch_name
-	git_result = IO.popen('git rev-parse --abbrev-ref HEAD').read
-	return git_result.to_s.slice(0, -1)
+	puts IO.popen('git branch --no-abbrev').read.slice(2..-1)
 end
 
 # Retorna os aquivos modificados no commit passado
